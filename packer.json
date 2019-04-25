@@ -1,0 +1,50 @@
+{   
+  "builders": [
+    { 
+      "name" : "production", 
+      "type": "amazon-ebs",
+      "region": "us-east-1",
+      "ami_regions": [],
+      "source_ami_filter": {
+        "filters": {
+          "virtualization-type": "hvm",
+          "name": "ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-*",
+          "root-device-type": "ebs"
+        },
+        "owners": [
+          "099720109477"
+        ],
+        "most_recent": true
+      },
+      "instance_type": "t2.medium",
+      "ssh_username": "ubuntu",
+      "ami_name": "jenkins_{{timestamp}}",
+      "subnet_id": "{{user `subnet_id`}}",
+      "vpc_id": "{{user `vpc_id`}}",
+      "encrypt_boot": true,
+      "tags": {
+        "Name": "jenkins"
+      }
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "chef-solo",
+      "cookbook_paths": [
+        "chef/cookbooks"
+      ],
+      "run_list": [
+        "main::default",
+        "java::default",
+        "jenkins::master"
+      ],
+      "environments_path": "chef/environments",
+      "chef_environment": "production"
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "manifest"
+    }
+  ]
+}

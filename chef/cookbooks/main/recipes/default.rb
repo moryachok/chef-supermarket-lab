@@ -13,3 +13,7 @@ end
   end
 end
 
+docker_service 'default' do
+  group "#{node[:app][:group][:name]}"
+  action [:create, :start]
+end

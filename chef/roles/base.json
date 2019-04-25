@@ -9,7 +9,9 @@
       "recipe[jenkins::master]"
     ],
     "production": [
-      "recipe[main]"
+      "recipe[main]",
+      "recipe[java]",
+      "recipe[jenkins::master]"
     ]
   },
   "json_class": "Chef::Role",
