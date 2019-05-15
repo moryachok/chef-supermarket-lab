@@ -1,3 +1,5 @@
+##USAGE
+
 ```
 cd ~/dev/
 git clone https://github.com/moryachok/chef-supermarket-lab.git
